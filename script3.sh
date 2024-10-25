@@ -11,17 +11,16 @@ echo "Instalando un servidor NodeJS"
 sudo apt install -y nodejs
 sudo apt install -y aptitude
 sudo aptitude install -y npm
+sudo aptitude install -y npm
+sudo apt install -y nodejs npm 
+npm install consul
+npm install express
 
 sudo apt install -y git
 
 echo "instalar Haproxy"
 sudo apt-get install -y haproxy
 sudo chown -R vagrant:vagrant /home/vagrant/consul_data
-#git clone https://github.com/omondragon/consulService
-#cd consulService/app
-
-# Unir al clúster de Consul (máquina consul1)       
-consul agent -node=servidorHaproxy -bind=192.168.100.100 -client=0.0.0.0 -data-dir=/home/vagrant/consul_data -join=192.168.100.101 &
 
 # Configurar HAProxy para balancear el tráfico       
 sudo bash -c 'cat > /etc/haproxy/haproxy.cfg <<EOF
@@ -82,5 +81,25 @@ backend web-backend
 #  default_backend web-backend
 EOF'
 
+
+cat <<EOL | sudo tee /etc/haproxy/errors/503.http
+HTTP/1.0 503 Service Unavailable
+Cache-Control: no-cache
+Connection: close
+Content-Type: text/html
+
+<html><body><h1>503 Service Unavailable</h1>
+<h2>
+No hay servidores disponibles para su peticion
+</h2>
+<h3>
+Favor contacte al administrador del sistema
+</h3>
+</body></html>
+EOL
+
 # reniciar HAproxy
-  sudo systemctl restart haproxy
+sudo systemctl restart haproxy
+
+# Unir al clúster de Consul (máquina consul1)       
+consul agent -node=servidorHaproxy -bind=192.168.100.100 -client=0.0.0.0 -data-dir=. -join=192.168.100.101 &

@@ -11,9 +11,10 @@ echo "Instalando un servidor NodeJS"
 sudo apt install -y nodejs
 sudo apt install -y aptitude
 sudo aptitude install -y npm
-
+sudo apt install -y nodejs npm 
+npm install consul
+npm install express
 sudo apt install -y git
-
 
 
 cat <<EOF > server.js
@@ -84,6 +85,6 @@ EOF
 
 # Iniciar Consul en modo servidor   
 sudo chown -R vagrant:vagrant /home/vagrant/consul_data    
-consul agent -server -bootstrap-expect=1 -node=clienteUbuntu -bind=192.168.100.101 -client=0.0.0.0 -data-dir=/home/vagrant/consul_data -ui &
+consul agent -server -bootstrap-expect=1 -node=clienteUbuntu -bind=192.168.100.101 -client=0.0.0.0 -data-dir=. -ui &
 
 chmod +x server.js 

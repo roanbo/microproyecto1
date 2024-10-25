@@ -11,12 +11,12 @@ echo "Instalando un servidor NodeJS"
 sudo apt install -y nodejs
 sudo apt install -y aptitude
 sudo aptitude install -y npm
+sudo apt install -y nodejs npm 
+npm install consul
 npm install express
 
 sudo apt install -y git
 
-#git clone https://github.com/omondragon/consulService
-#cd consulService/app
 
 cat <<EOF > server.js
 const Consul = require('consul'); 
@@ -88,6 +88,6 @@ chmod +x server.js
 
 # Unir al clúster de Consul (máquina consul1) 
 sudo chown -R vagrant:vagrant /home/vagrant/consul_data      
-consul agent -node=servidorUbuntu -bind=192.168.100.102 -client=0.0.0.0 -data-dir=/home/vagrant/consul_data -join=192.168.100.101 &
+consul agent -node=servidorUbuntu -bind=192.168.100.102 -client=0.0.0.0 -data-dir=. -join=192.168.100.101 &
 
 #node server.js 5000
