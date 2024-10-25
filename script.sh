@@ -85,6 +85,6 @@ EOF
 
 # Iniciar Consul en modo servidor   
 sudo chown -R vagrant:vagrant /home/vagrant/consul_data    
-consul agent -server -bootstrap-expect=1 -node=clienteUbuntu -bind=192.168.100.101 -client=0.0.0.0 -data-dir=. -ui &
+consul agent -server -bootstrap-expect=1 -node=clienteUbuntu -bind=192.168.100.101 -client=0.0.0.0 -data-dir=/home/vagrant/consul_data -ui &
 
 chmod +x server.js 
