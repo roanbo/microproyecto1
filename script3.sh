@@ -70,7 +70,7 @@ resolvers consul
     hold valid 5s
 backend web-backend
    balance roundrobin
-   server-template web-backend 1-10 _mymicroservice._tcp.service.consul resolvers consul resolve-opts allow-dup-ip resolve-prefer ipv4 check port 5000
+   server-template web-backend 1-10 _mymicroservice._tcp.service.consul resolvers consul resolve-opts allow-dup-ip resolve-prefer ipv4 check
    stats enable
    stats auth admin:admin
    stats uri /haproxy?stats
